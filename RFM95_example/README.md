@@ -4,7 +4,7 @@
 
 ## What is LoRa?
 
-LoRa is a spread spectrum modulation technique derived from chirp spread spectrum (CSS) technology. LoRa allows for long range, low power wireless communication, often applied in IoT (Internet of Things) applications.
+LoRa is a spread spectrum modulation technique derived from chirp spread spectrum (CSS) technology. LoRa allows for long-range, low power wireless communication, often applied in IoT (Internet of Things) applications.
 
 ## Different LoRa Frequencies
 
@@ -15,13 +15,13 @@ LoRa uses license-free radio frequency bands. The most widely used frequencies a
 
 ## LoRa Applications
 
-Because of its huge range and low power consumtion LoRa can be widely applied in applications like:
+Because of its huge range and low power consumption LoRa can be widely applied in applications like:
 * Internet of Things (IoT)
 * Smart Home
 
 ## LoRa with ESP32 (Point to Point Communication)
 
-Getting started with Lora is pretty straight forward. You only need two Lora modules like a [RFM95](https://at.rs-online.com/web/p/rf-module/1251259/) and two microcontrollers (ESP32 for this guide).
+Getting started with Lora is pretty straight forward. You only need two LoRa modules, like a [RFM95](https://at.rs-online.com/web/p/rf-module/1251259/), and two microcontrollers (ESP32 for this guide).
 
 One of the two will play the sender. The other one will receive the messages and will react accordingly.
 
@@ -34,7 +34,7 @@ Before you can get started working with LoRa you need to install all the necessa
 If you haven't already you'll need to install an add-on that allows you to program an ESP32 using the Arduino IDE. 
 
 Guide:
-[Installing the ESP32 Board in Arduino IDE (Windows, Mac OS X, Linux)])(https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
+[Installing the ESP32 Board in Arduino IDE (Windows, Mac OS X, Linux)](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
 
 #### Installing the LoRa Library
 
@@ -48,14 +48,12 @@ Open the Arduino IDE and go to **Sketch > Include Library > Manage Libraries** a
 
 The RFM95 communicates with the microcontroller over [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface). So you can simply connect the RFM95 to the default SPI pins of the ESP32 as shown in the following image:
 
-![]()
-
 <figure >
   <img src="https://i2.wp.com/randomnerdtutorials.com/wp-content/uploads/2018/06/LoRa_ESP32_Wiring.png?w=794&ssl=1">
   <figcaption>From: https://randomnerdtutorials.com/esp32-lora-rfm95-transceiver-arduino-ide/</figcaption>
 </figure>
 
-Note: Off the 3 GND Pins only one needs to be connected.
+**Note**: Of the 3 GND Pins, only one needs to be connected.
 
 If you are using the RFM Adapter from school you'll have to use the following image:
 
@@ -107,7 +105,7 @@ void loop() {
 }
 ```
 
-Lets break this down piece by piece:
+Let's break this down piece by piece:
 
 It starts by including the needed libraries.
 
@@ -116,7 +114,7 @@ It starts by including the needed libraries.
 #include <LoRa.h>
 ```
 
-Then, it defines the pins used by the LoRa module. If you've folled the schmatic above you should have the following pins:
+Then, it defines the pins used by the LoRa module. If you've folled the schematic above, you should have the following pins:
 
 ```c
 #define ss 5
@@ -124,9 +122,9 @@ Then, it defines the pins used by the LoRa module. If you've folled the schmatic
 #define dio0 2
 ```
 
-Now inside the setup method you can set the pins by calling the ```.setPins``` method. Afterwards, you can initialize the LoRa module by calling ```LoRa.begin(frequencey)``` passing it the right frequency for your location.
+Now inside the setup method you can set the pins by calling the ```.setPins``` method. Afterwards, you can initialize the LoRa module by calling ```LoRa.begin(frequencey)```, passing it the right frequency for your location.
 
-With the initialization done you can send data using the following code:
+With the initialization done, you can send data using the following code:
 
 ```c
 LoRa.beginPacket();
@@ -137,7 +135,7 @@ LoRa.endPacket();
 
 ### LoRa Receiver Example Sketch
 
-The receiver sketch is very similar to the sender sketch. The only differences are in the loop method, where instead of sending data the script is receiving data.
+The receiver sketch is very similar to the sender sketch. The only differences are in the loop method, where instead of sending data, the script is receiving data.
 
 ```c
 #include <SPI.h>
@@ -182,7 +180,7 @@ void loop() {
 
 ### Testing the Scripts
 
-In order to test if everything is working correctly you need to connect both ESPs to a PC and open the Serial Monitor.
+To test if everything is working correctly, you need to connect both ESPs to a PC and open the Serial Monitor.
 
 The Lora Sender script should have the following output:
 
