@@ -87,6 +87,38 @@ You should now be able to see the send data in the **Data tab** of the Applicati
 
 ![Device data](doc/device_data.png)
 
+## Encoding/Decoding data
+
+LoraWAN and TTN transfer raw bytes, which can be hard to read. That's the reason why they provide libraries to encode/decode data. For Arduino they have the [Lora Serialization library](https://github.com/thesolarnomad/lora-serialization). The library allows you to encode your data on the Arduino side and decode it on the TTN side.
+
+If you for example have temperature, humidity, pressure and sea_leavel readings you can encode/decode your data as follows:
+
+Arduino side:
+```c
+LoraMessage message;
+
+message
+    .addTemperature(temperature)
+    .addHumidity(humidity)
+    .addUnixtime(pressure)
+    .addUint16(sea_level);
+```
+
+TTN side (Payload Formats):
+```javascript
+// include src/decoder.js
+function Decoder(bytes, port) {
+  var json = decode(bytes, [temperature, humidity, unixtime, uint16], ['temperature', 'humidity', 'pressure', 'sea_level']);
+  return json;
+}
+```
+
+![Payload Formats](doc/payload_formats.PNG)
+
+If you now look at the data tab you'll be able to see the data as plain text.
+
+![](doc/decoded_data.PNG)
+
 ## Gateway data retrieval over MQTT
 
 Now we are receiving the data in TTN, but how can we now get the data from TTN? TTN allows you to get the data over MQTT, an extremely lightweight machine-to-machine(M2M) connectivity protocol using a publish/subscribe model.
