@@ -89,7 +89,7 @@ You should now be able to see the send data in the **Data tab** of the Applicati
 
 ## Encoding/Decoding data
 
-LoraWAN and TTN transfer raw bytes, which can be hard to read. That's the reason why they provide libraries to encode/decode data. For Arduino they have the [Lora Serialization library](https://github.com/thesolarnomad/lora-serialization). The library allows you to encode your data on the Arduino side and decode it on the TTN side.
+LoraWAN and TTN transfer raw bytes, which can be hard to read. That's the reason why libraries are provided to encode/decode data. For Arduino the [Lora Serialization library](https://github.com/thesolarnomad/lora-serialization) can be used. The library allows you to encode your data on the Arduino side and decode it on the TTN side.
 
 If you for example have temperature, humidity, pressure and sea_leavel readings you can encode/decode your data as follows:
 
@@ -106,7 +106,7 @@ message
 
 TTN side (Payload Formats):
 ```javascript
-// include src/decoder.js
+// copy the content from src/decoder.js (https://github.com/thesolarnomad/lora-serialization/blob/master/src/decoder.js)
 function Decoder(bytes, port) {
   var json = decode(bytes, [temperature, humidity, unixtime, uint16], ['temperature', 'humidity', 'pressure', 'sea_level']);
   return json;
@@ -115,7 +115,7 @@ function Decoder(bytes, port) {
 
 ![Payload Formats](doc/payload_formats.PNG)
 
-If you now look at the data tab you'll be able to see the data as plain text.
+If you now look at the data tab you'll be able to see the data as decoded elements.
 
 ![](doc/decoded_data.PNG)
 
