@@ -10,6 +10,58 @@
 
 To create a The Things Network Account navigate to https://www.thethingsnetwork.org/ and click on the "Sign up" button. After that, you'll need to enter a username, email, and password. Be sure to enter a good username since you won't be able to change it after creating the account. 
 
+## Adding a gateway
+
+> Gateways form the bridge between devices and The Things Network. Devices use low power networks like LoRaWAN to connect to the Gateway, while the Gateway uses high bandwidth networks like WiFi, Ethernet or Cellular to connect to The Things Network. All gateways within reach of a device will receive the device’s messages and forward them to The Things Network. The network will deduplicate the messages and select the best gateway to forward any messages queued for downlink. A single gateway can serve thousands of devices. - [TTN Gateway documentation](https://www.thethingsnetwork.org/docs/gateways/)
+
+### The Things Indoor Gateway
+
+I used the [The Things Indoor Gateway (TTIG)](https://www.thethingsnetwork.org/docs/gateways/thethingsindoor/), an 8 channel LoRaWAN gateway with LBT support, which is available for $69.
+
+![The Things Indoor Gateway (TTIG)](doc/TTIG2.jpg)
+
+#### Buying The Things Indoor Gateway
+
+**Links:**
+* RS Components - [link](https://uk.rs-online.com/web/p/radio-frequency-development-kits/1843981/)
+* Connected Things - [link](https://connectedthings.store/gb/lorawan-gateways/the-things-indoor-gateway-868-mhz.html)
+* IoT Shop - DE - [link](https://iot-shop.de/produkt/the-things-indoor-gateway)
+* Allied Electronics - [link](https://www.alliedelec.com/product/rs-components-uk/ttig-915/71600476/)
+
+There are also lots of other gateways. For an extensive list check out the hardware section of the TTN [gateway documentation](https://www.thethingsnetwork.org/docs/gateways/).
+
+### Connecting the gateway to your WiFi (from the [TTN docs](https://www.thethingsnetwork.org/docs/gateways/thethingsindoor/#connection-to-the-the-things-network-backend))
+
+1. Press the reset button (small button at the back of the gateway next to the USB-C port) for 5 seconds until the LED blinks rapidly GREEN<->RED for a couple of times.
+2. Hold the SETUP (button at the top of the gateway, next to the LED) for 10 seconds until the LED blinks rapidly in RED.
+3. The gateway now exposes a WiFi AP whose SSID is MINIHUB-xxxxxx where xxxxxx is the last 6 digits of the gateway ID.
+4. The password for this network is printed on the back panel of the device under WiFi PW.
+5. After connecting to this network go to 192.168.4.1 using a web browser to access the WiFi config page.
+6. Select the WiFi network and enter the password if it’s a closed network.
+7. Select the “Save and Reboot” option.
+8. If your config is right,
+    * The gateway will blink GREEN for a few seconds while it connects to this network.
+    * Then, it will blink GREEN<->RED for a few seconds while it connects to the CUPS endpoint and fetches the necessary information to connect to the LNS traffic endpoint.
+9. If your configuration was successful, the LED will be solid GREEN which means that the gateway is connected to the LoRaWAN network and is ready to handle packets.
+
+### Connection to the TTN Backend
+
+Now, that your gateway is connected to the LoraWAN network you can register it inside TTN. For this, navigate to the [gateways page](https://console.thethingsnetwork.org/gateways) and click "register gateway".
+
+![Register gateway](doc/register_gateway.PNG)
+
+To connect this gateway to the The Things Network console, register the gateway using the Legacy Packet Forwarder option. The EUI of the gateway is derived from the first number below the QR code on the back of the TTN Indoor Gateway. To get the 8 byte EUI insert FFFE after the first 6 characters. The EUI can also be found at the bottom of the WiFi Setup page.
+
+After adding the gateway EUI add the other details such as location, frequency plan and router.
+
+![Register gateway](doc/register_gateway_2.png)
+
+After you're finished click the register gateway button. If your configuration was successful and you have any LoRaWAN nodes transmitting nearby you should start receiving packets.
+
+![Gateway traffic](doc/gateway_traffic.png)
+
+If you don't have any nodes yet don't worry. You'll learn how to create an application and add a node in the next sections.
+
 ## Creating an application
 
 Next, you'll need to create an application. For this, navigate to the application page and click "add application".
