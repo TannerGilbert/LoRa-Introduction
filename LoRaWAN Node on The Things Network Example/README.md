@@ -14,9 +14,11 @@ To create a The Things Network Account navigate to https://www.thethingsnetwork.
 
 > Gateways form the bridge between devices and The Things Network. Devices use low power networks like LoRaWAN to connect to the Gateway, while the Gateway uses high bandwidth networks like WiFi, Ethernet or Cellular to connect to The Things Network. All gateways within reach of a device will receive the device’s messages and forward them to The Things Network. The network will deduplicate the messages and select the best gateway to forward any messages queued for downlink. A single gateway can serve thousands of devices. - [TTN Gateway documentation](https://www.thethingsnetwork.org/docs/gateways/)
 
+If there already is a gateway within reach you won't need to buy one yourself since all gateways within reach of a device will receive and forward messages.
+
 ### The Things Indoor Gateway
 
-I used the [The Things Indoor Gateway (TTIG)](https://www.thethingsnetwork.org/docs/gateways/thethingsindoor/), an 8 channel LoRaWAN gateway with LBT support, which is available for $69.
+For my tests I used the [The Things Indoor Gateway (TTIG)](https://www.thethingsnetwork.org/docs/gateways/thethingsindoor/), an 8 channel LoRaWAN gateway with LBT support, which is available for $69.
 
 ![The Things Indoor Gateway (TTIG)](doc/TTIG2.jpg)
 
