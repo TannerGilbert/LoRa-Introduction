@@ -12,13 +12,13 @@ To create a The Things Network Account navigate to https://www.thethingsnetwork.
 
 ## Adding a gateway
 
-> Gateways form the bridge between devices and The Things Network. Devices use low power networks like LoRaWAN to connect to the Gateway, while the Gateway uses high bandwidth networks like WiFi, Ethernet or Cellular to connect to The Things Network. All gateways within reach of a device will receive the device’s messages and forward them to The Things Network. The network will deduplicate the messages and select the best gateway to forward any messages queued for downlink. A single gateway can serve thousands of devices. - [TTN Gateway documentation](https://www.thethingsnetwork.org/docs/gateways/)
+> Gateways form the bridge between devices and The Things Network. Devices use low power networks like LoRaWAN to connect to the Gateway, while the Gateway uses high bandwidth networks like WiFi, Ethernet or Cellular to connect to The Things Network. All gateways within reach of a device will receive the device's messages and forward them to The Things Network. The network will deduplicate the messages and select the best gateway to forward any messages queued for downlink. A single gateway can serve thousands of devices. - [TTN Gateway documentation](https://www.thethingsnetwork.org/docs/gateways/)
 
-If there already is a gateway within reach you won't need to buy one yourself since all gateways within reach of a device will receive and forward messages.
+If there already is a gateway within reach, you won't need to buy one yourself since all gateways within reach of a device will receive and forward messages.
 
 ### The Things Indoor Gateway
 
-For my tests I used the [The Things Indoor Gateway (TTIG)](https://www.thethingsindustries.com/docs/gateways/thethingsindoorgateway/), an 8 channel LoRaWAN gateway with LBT support, which is available for $69.
+For my tests, I used the [The Things Indoor Gateway (TTIG)](https://www.thethingsindustries.com/docs/gateways/thethingsindoorgateway/), an eight-channel LoRaWAN gateway with LBT support, which is available for $69.
 
 ![The Things Indoor Gateway (TTIG)](doc/TTIG2.jpg)
 
@@ -30,7 +30,7 @@ For my tests I used the [The Things Indoor Gateway (TTIG)](https://www.thethings
 * IoT Shop - DE - [link](https://iot-shop.de/produkt/the-things-indoor-gateway)
 * Allied Electronics - [link](https://www.alliedelec.com/product/rs-components-uk/ttig-915/71600476/)
 
-There are also lots of other gateways. For an extensive list check out the hardware section of the TTN [gateway documentation](https://www.thethingsindustries.com/docs/gateways/).
+There are also lots of other gateways. For an extensive list, check out the hardware section of the TTN [gateway documentation](https://www.thethingsindustries.com/docs/gateways/).
 
 ### Connecting the gateway to your WiFi (from the [TTN docs](https://www.thethingsindustries.com/docs/gateways/thethingsindoorgateway/#connecting-the-things-indoor-gateway))
 
@@ -38,9 +38,9 @@ There are also lots of other gateways. For an extensive list check out the hardw
 2. Hold the SETUP (button at the top of the gateway, next to the LED) for 10 seconds until the LED blinks rapidly in RED.
 3. The gateway now exposes a WiFi AP whose SSID is MINIHUB-xxxxxx where xxxxxx is the last 6 digits of the gateway ID.
 4. The password for this network is printed on the back panel of the device under WiFi PW.
-5. After connecting to this network go to 192.168.4.1 using a web browser to access the WiFi config page.
-6. Select the WiFi network and enter the password if it’s a closed network.
-7. Select the “Save and Reboot” option.
+5. After connecting to this network, go to 192.168.4.1 using a web browser to access the WiFi config page.
+6. Select the WiFi network and enter the password if it's a closed network.
+7. Select the "Save and Reboot" option.
 8. If your config is right,
     * The gateway will blink GREEN for a few seconds while it connects to this network.
     * Then, it will blink GREEN<->RED for a few seconds while it connects to the CUPS endpoint and fetches the necessary information to connect to the LNS traffic endpoint.
@@ -48,23 +48,23 @@ There are also lots of other gateways. For an extensive list check out the hardw
 
 ### Connection to the TTN Backend
 
-Now, that your gateway is connected to the LoraWAN network you can register it inside TTN. For this, navigate to the [**gateways** page](https://console.thethingsnetwork.org/gateways) and click "**Claim gateway**".
+Now that your gateway is connected to the LoraWAN network, you can register it inside TTN. For this, navigate to the [**gateways** page](https://console.thethingsnetwork.org/gateways) and click the "**Claim gateway**" button.
 
 ![Claim gateway I](doc/claim_gateway.png)
 
-Fill in the **Gateway EUI**, the **Claim authentication code** (the WiFi Password on the back of your TTN Indoor Gateway), the **Gateway ID** and choose the appropriate Frequency Plan for your region and device. The EUI of the gateway is derived from the first number below the QR code on the back of the TTN Indoor Gateway. To get the 8 byte EUI insert FFFE after the first 6 characters. The EUI can also be found at the bottom of the WiFi Setup page.
+Fill in the **Gateway EUI**, the **Claim authentication code** (the WiFi Password on the back of your TTN Indoor Gateway), the **Gateway ID**, and choose the appropriate Frequency Plan for your region and device. The EUI of the gateway is derived from the first number below the QR code on the back of the TTN Indoor Gateway. To get the 8 byte EUI insert FFFE after the first 6 characters. The EUI can also be found at the bottom of the WiFi Setup page.
 
 ![Claim gateway II](doc/claim_gateway_2.png)
 
-After you're finished click the "**Claim gateway**" button. If your inputs are correct, a new gateway will be created and you'll be redirected to an gateway overview page, showing you some basic information about the gateway as well as the live traffic of the gateway.
+After you're finished, click the "**Claim gateway**" button. If your inputs are correct, a new gateway will be created, and you'll be redirected to the gateway overview page, showing you some basic information about the gateway as well as the live traffic of the gateway.
 
 ![Gateway Overview](doc/gateway_overview.png)
 
-If you don't have any nodes yet don't worry. You'll learn how to create an application and add a node in the next sections.
+If you don't have any nodes yet, don't worry. You'll learn how to create an application and add a node in the next sections.
 
 ## Creating an application
 
-To create an application go to **Applications** in the top menu, and click **Add Application** to get to the application registration page. Fill in the application id (all other fields are optional).
+To create an application, go to **Applications** in the top menu, and click **Add Application** to get to the application registration page. Then, fill in the application id (all other fields are optional).
 
 ![Create application](doc/create_application.png)
 
@@ -74,21 +74,27 @@ After clicking on the "**Create application**" button, you'll be redirected to t
 
 ## Registering a device
 
-Now that you've created an application you can add end devices to the application by going to **End devices** in the left menu and clicking on the "**Add end device**" button to reach the end device registration page.
+Now that you've created an application, you can add end devices to the application by going to **End devices** in the left menu and clicking on the "**Add end device**" button to reach the end device registration page.
 
-![Adding device](doc/adding_device.PNG)
+![Adding device](doc/add_end_device.png)
 
-After adding the device go to the Settings tab and change the **Activation Method** to **ABP**.
+### Using the LoRaWAN Device Repository
 
-![Change Activation Method](doc/device_settings.png)
+The LoRaWAN device repository contains device profiles, LoRaWAN information, codecs, and more, for many LoRaWAN devices. Using the device repository to add devices in The Things Stack automatically uses the correct LoRaWAN version and regional parameters version, which means less information for you to find yourself.
 
-Now you should see a device address, network session key, and app session key under the Overview tab. These three values will later be needed to get the script to work.
+![Register end device using LoRaWAN device repository](doc/add_end_device_using_lorawan_repository.png)
 
-![Device Overview](doc/device_overview.png)
+### Manually Registering an End Device
+
+If your device is not in the device repository, like if you're using the RFM95 Lora module in combination with an ESP32, you may manually register it.
+
+![Manually register end device](doc/manually_register_end_device.png)
+
+For more information, read the ['Manually Register an End Device' section](https://www.thethingsindustries.com/docs/devices/adding-devices/#manually-registering-an-end-device) of the [The Things Stack documentation](https://www.thethingsindustries.com/docs/).
 
 ## Install arduino-lmic
 
-LMiC (formerly 'LoRa MAC in C') is IBM's LoRa library. [Arduino-LMIC](https://github.com/mcci-catena/arduino-lmic) contains the IBM LMIC (LoraMAC-in-C) library, slightly modified to run in the Arduino environment, allowing using the SX1272, SX1276 transceivers and compatible modules (such as some HopeRF RFM9x modules).
+LMiC (formerly 'LoRa MAC in C') is IBM's LoRa library. [Arduino-LMIC](https://github.com/mcci-catena/arduino-lmic) contains the IBM LMIC (LoraMAC-in-C) library, slightly modified to run in the Arduino environment, allowing using the SX1272, SX1276 transceivers, and compatible modules (such as some HopeRF RFM9x modules).
 
 To install the library:
 * go to **Sketch > Include Library > Manage Libraries** and search for lmic and install the **MCCI LoRaWAN LMIC Library** library.
@@ -113,9 +119,9 @@ EU:
 
 ## Creating a sender script
 
-The LMIC library already includes multplie scripts to communicate with The Things Network, which can be accessed under **Examples > MCCI LoRaWAN LMIC Library**. In this guide we'll use the `ttn_abp` script.
+The LMIC library includes multiple scripts to communicate with The Things Network, which can be accessed under **Examples > MCCI LoRaWAN LMIC Library**. In this guide, we'll use the `ttn_abp` script.
 
-To get the script to work, you have to enter the **Network Session Key**, **App Session Key**, and **Device Address** from the Overview tab of the device. You'll also have to update the **lmic_pinmap lmic_pins** variables depending on how you connected it to your microcontroller.
+To get the script to work, you have to enter the **Network Session Key**, **App Session Key**, and **Device Address** from the Overview tab of the device. You'll also have to update the **lmic_pinmap lmic_pins** variables depending on what microcontroller and LoRa module you're using.
 
 For the Heltect ESP32 Lora (V2) the pins look as follows
 
@@ -130,53 +136,40 @@ const lmic_pinmap lmic_pins = {
 
 After uploading the script, the device should print something similar to the following output on the Serial Monitor.
 
-![Sending script output](doc/running_sending_script.PNG)
+![Sending script output](doc/running_sending_script.png)
 
 You should also now be able to see the send data in the **Data tab** of the Application or Device page.
 
-![Device data](doc/device_data.png)
+![Device data](doc/received_data.png)
 
 ## Encoding/Decoding data
 
-LoraWAN and TTN transfer raw bytes, which can be hard to read. That's the reason why libraries are provided to encode/decode data. For Arduino the [Lora Serialization library](https://github.com/thesolarnomad/lora-serialization) can be used. The library allows you to encode your data on the Arduino side and decode it on the TTN side.
+LoraWAN and TTN transfer raw bytes, which can be hard to read. To convert the data into a plaintext string you need to add a **Payload formatter** to your application.
 
-If you for example have temperature, humidity, pressure and sea_leavel readings you can encode/decode your data as follows:
-
-Arduino side:
-```c
-LoraMessage message;
-
-message
-    .addTemperature(temperature)
-    .addHumidity(humidity)
-    .addUnixtime(pressure)
-    .addUint16(sea_level);
-```
-
-TTN side (Payload Formats):
 ```javascript
-// copy the content from src/decoder.js (https://github.com/thesolarnomad/lora-serialization/blob/master/src/decoder.js)
-function Decoder(bytes, port) {
-  var json = decode(bytes, [temperature, humidity, unixtime, uint16], ['temperature', 'humidity', 'pressure', 'sea_level']);
-  return json;
+function decodeUplink(input) {
+  return {
+    data: {
+      bytes: input.bytes,
+      value: String.fromCharCode.apply(null, input.bytes)
+    },
+    warnings: [],
+    errors: []
+  };
 }
 ```
 
-![Payload Formats](doc/payload_formats.PNG)
-
-If you now look at the data tab you'll be able to see the data as decoded elements.
-
-![](doc/decoded_data.PNG)
+![Decoded data](doc/decoded_data.png)
 
 ## Gateway data retrieval over MQTT
 
-Now we are receiving the data in TTN, but how can we now get the data from TTN? TTN allows you to get the data over MQTT, an extremely lightweight machine-to-machine(M2M) connectivity protocol using a publish/subscribe model.
+Now we are receiving the data in TTN, but how can we get the data from TTN? TTN lets you get the data over MQTT, an extremely lightweight machine-to-machine(M2M) connectivity protocol using a publish/subscribe model.
 
-In the following examples, I'll show you how to receive data by using [Mosquitto's CLI](https://mosquitto.org/download/), but TTN also provides libraries for multiple programming languages, including Java, Node.js, and Python. For more information, check out the [Integrations with MQTT Clients section in the documentation](https://www.thethingsindustries.com/docs/integrations/mqtt/mqtt-clients/).
+In the following examples, I'll show you how to receive data using [Mosquitto's CLI](https://mosquitto.org/download/), but TTN also provides libraries for multiple programming languages, including Java, Node.js, and Python. For more information, check out the [Integrations with MQTT Clients section in the documentation](https://www.thethingsindustries.com/docs/integrations/mqtt/mqtt-clients/).
 
 ### Subscribing to Upstream Traffic
 
-The Application Server publishes uplink traffic on the follow topics:
+The Application Server publishes uplink traffic on the following topics:
 * `v3/{application id}@{tenant id}/devices/{device id}/join`
 * `v3/{application id}@{tenant id}/devices/{device id}/up`
 * `v3/{application id}@{tenant id}/devices/{device id}/down/queued`
@@ -187,7 +180,7 @@ The Application Server publishes uplink traffic on the follow topics:
 * `v3/{application id}@{tenant id}/devices/{device id}/service/data`
 * `v3/{application id}@{tenant id}/devices/{device id}/location/solved`
 
-You can either subscribe to topics separately or you can subscribe to all topics by using `#`.
+You can either subscribe to topics separately, or you can subscribe to all topics by using `#`.
 
 ```bash
 mosquitto_sub -h thethings.example.com -t "#" -u "<AppID>" -P "<AppKey>" -d
@@ -195,7 +188,7 @@ mosquitto_sub -h thethings.example.com -t "#" -u "<AppID>" -P "<AppKey>" -d
 
 > Don't forget to replace, \<AppID>, \<AppKey> with the right values for your application. You can find them in the Overview tab of your application.
 
-If you only want to get a specific field you can write the name of the field after the topic.
+If you only want to get a specific field, you can write the field's name after the topic.
 
 ```bash
 mosquitto_sub -h thethings.example.com -t '+/devices/+/up/led' -u '<AppID>' -P '<AppKey>' -d
@@ -203,7 +196,7 @@ mosquitto_sub -h thethings.example.com -t '+/devices/+/up/led' -u '<AppID>' -P '
 
 ### Publishing Downlink Traffic
 
-MQTT can also be used to send messages to TTN. For this you will have to address a specific device by its **Device ID**.
+MQTT can also be used to send messages to TTN. For this, you will have to address a specific device by its **Device ID**.
 
 ```
 mosquitto_pub -h <Region>.thethings.network -t "v3/<AppID>/devices/<DevID>/down/push" -u "<AppID>" -P "<AppKey>" -m "{""payload_fields"":{""led"":true}} -d"
