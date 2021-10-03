@@ -88,58 +88,51 @@ Now you should see a device address, network session key, and app session key un
 
 ## Install arduino-lmic
 
-LMiC (formerly 'LoRa MAC in C') is IBM's LoRa library. Arduino-LMIC contains the IBM LMIC (LoraMAC-in-C) library, slightly modified to run in the Arduino environment, allowing using the SX1272, SX1276 transceivers and compatible modules (such as some HopeRF RFM9x modules).
+LMiC (formerly 'LoRa MAC in C') is IBM's LoRa library. [Arduino-LMIC](https://github.com/mcci-catena/arduino-lmic) contains the IBM LMIC (LoraMAC-in-C) library, slightly modified to run in the Arduino environment, allowing using the SX1272, SX1276 transceivers and compatible modules (such as some HopeRF RFM9x modules).
 
 To install the library:
-* go to **Sketch > Include Library > Manage Libraries** and search for lmic and install the **IBM LMIC Framework** library.
+* go to **Sketch > Include Library > Manage Libraries** and search for lmic and install the **MCCI LoRaWAN LMIC Library** library.
 
-## Wiring RFM95 and ESP32
+## Configure library
 
-![RMF95 Pinout](doc/rmf95_pinout.jpg)
+The default frequency band used in the **MCCI LoRaWAN LMIC Library** library is 915MHz, which works for the US and Austrialia. If you're in a different region you'll have modify the `lmic_project_config.h` file, which can be found in the `project_config` folder of the library. To change the frequency band just uncomment the line with your region:
 
-The RFM95 communicates with the microcontroller over [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface). To get the module to communicate with the ESP32 correctly connect the pins as follows:
-
-* GND: GND
-* 3.3V: 3.3V
-* MISO: D19
-* MOSI: D23
-* SCK: D18
-* RESET/RST: D14
-* DIO0: 2
-* DIO1: 15
-* DIO2: 4
-* NSS: 5
-
-Note: Of the three GND pins, only one needs to be connected.
-
-If you are using the RFM Adapter from school you'll have to use the following image:
-
-![](doc/rfm_adapter.png)
-
-**Important**: Don't forget to connect an antenna to the ANT pin.
+EU:
+```c
+// project-specific definitions
+#define CFG_eu868 1
+//#define CFG_us915 1
+//#define CFG_au915 1
+//#define CFG_as923 1
+//#define LMIC_COUNTRY_CODE LMIC_COUNTRY_CODE_JP	/* for as923-JP */
+//#define CFG_kr920 1
+//#define CFG_in866 1
+#define CFG_sx1276_radio 1
+//#define LMIC_USE_INTERRUPTS
+```
 
 ## Creating a sender script
 
-The LMIC library already includes a script for The Things Network, which can be accessed under **Examples > IBM LMIC Framework > ttn**.
+The LMIC library already includes multplie scripts to communicate with The Things Network, which can be accessed under **Examples > MCCI LoRaWAN LMIC Library**. In this guide we'll use the `ttn_abp` script.
 
-To get the script to work, you have to enter the Network Session Key, App Session Key, and Device Address from the Overview tab of the Device. You'll also have to update the **lmic_pinmap lmic_pins** variables depending on how you connected it to your microcontroller.
+To get the script to work, you have to enter the **Network Session Key**, **App Session Key**, and **Device Address** from the Overview tab of the device. You'll also have to update the **lmic_pinmap lmic_pins** variables depending on how you connected it to your microcontroller.
 
-In my case, I used the following pins:
+For the Heltect ESP32 Lora (V2) the pins look as follows
 
 ```c
 const lmic_pinmap lmic_pins = {
-    .nss = 6,
-    .rxtx = LMIC_UNUSED_PIN,
-    .rst = 5,
-    .dio = {2, 3, 4},
+  .nss = 18,
+  .rxtx = LMIC_UNUSED_PIN,
+  .rst = 14,
+  .dio = {26, 34, 35},
 };
 ```
 
-After running the file, you should see something like the following in the Serial Monitor
+After uploading the script, the device should print something similar to the following output on the Serial Monitor.
 
 ![Sending script output](doc/running_sending_script.PNG)
 
-You should now be able to see the send data in the **Data tab** of the Application or Device page.
+You should also now be able to see the send data in the **Data tab** of the Application or Device page.
 
 ![Device data](doc/device_data.png)
 
@@ -179,30 +172,39 @@ If you now look at the data tab you'll be able to see the data as decoded elemen
 
 Now we are receiving the data in TTN, but how can we now get the data from TTN? TTN allows you to get the data over MQTT, an extremely lightweight machine-to-machine(M2M) connectivity protocol using a publish/subscribe model.
 
-In the following examples, I'll show you how to receive data by using [Mosquitto's CLI](https://mosquitto.org/download/), but TTN also provides libraries for multiple programming languages, including Java, Node.js, and Python. For more information, check out the [SDKs & Libraries section in the documentation](https://www.thethingsnetwork.org/docs/applications/sdks.html).
+In the following examples, I'll show you how to receive data by using [Mosquitto's CLI](https://mosquitto.org/download/), but TTN also provides libraries for multiple programming languages, including Java, Node.js, and Python. For more information, check out the [Integrations with MQTT Clients section in the documentation](https://www.thethingsindustries.com/docs/integrations/mqtt/mqtt-clients/).
 
-### Receiving Messages (up)
+### Subscribing to Upstream Traffic
 
-To receive data from a TTN application, execute the following command:
+The Application Server publishes uplink traffic on the follow topics:
+* `v3/{application id}@{tenant id}/devices/{device id}/join`
+* `v3/{application id}@{tenant id}/devices/{device id}/up`
+* `v3/{application id}@{tenant id}/devices/{device id}/down/queued`
+* `v3/{application id}@{tenant id}/devices/{device id}/down/sent`
+* `v3/{application id}@{tenant id}/devices/{device id}/down/ack`
+* `v3/{application id}@{tenant id}/devices/{device id}/down/nack`
+* `v3/{application id}@{tenant id}/devices/{device id}/down/failed`
+* `v3/{application id}@{tenant id}/devices/{device id}/service/data`
+* `v3/{application id}@{tenant id}/devices/{device id}/location/solved`
+
+You can either subscribe to topics separately or you can subscribe to all topics by using `#`.
 
 ```bash
-mosquitto_sub -h <Region>.thethings.network -t '+/devices/+/up' -u '<AppID>' -P '<AppKey>' -v
+mosquitto_sub -h thethings.example.com -t "#" -u "<AppID>" -P "<AppKey>" -d
 ```
 
-> Don't forget to replace \<Region>, \<AppID>, \<AppKey> with the right values for your application. You can find them in the Overview tab of your application. The region is can be found under **Handler**. You will only need the part that follows **ttn-handler-**, e.g. **eu**.
+> Don't forget to replace, \<AppID>, \<AppKey> with the right values for your application. You can find them in the Overview tab of your application.
 
-> Note: ```-t``` stands for the topic do subscribe to. The topic has the following structure: ```AppID/devices/deviceID/up```. Attributes between // can also be replaced with a ```+```, which stands for everything. So if instead of a deviceID you put a ```+``` you'll listen to every device registered in the application.
-
-If you only want to get a specific field you can write the name of the field after **up/**.
+If you only want to get a specific field you can write the name of the field after the topic.
 
 ```bash
-mosquitto_sub -h <Region>.thethings.network -t '+/devices/+/up/led' -u '<AppID>' -P '<AppKey>' -v
+mosquitto_sub -h thethings.example.com -t '+/devices/+/up/led' -u '<AppID>' -P '<AppKey>' -d
 ```
 
-### Sending Messages (down)
+### Publishing Downlink Traffic
 
 MQTT can also be used to send messages to TTN. For this you will have to address a specific device by its **Device ID**.
 
 ```
-mosquitto_pub -h <Region>.thethings.network -t "<AppID>/devices/<DevID>/down" -u "<AppID>" -P "<AppKey>" -m "{""payload_fields"":{""led"":true}}"
+mosquitto_pub -h <Region>.thethings.network -t "v3/<AppID>/devices/<DevID>/down/push" -u "<AppID>" -P "<AppKey>" -m "{""payload_fields"":{""led"":true}} -d"
 ```
