@@ -18,7 +18,7 @@ If there already is a gateway within reach you won't need to buy one yourself si
 
 ### The Things Indoor Gateway
 
-For my tests I used the [The Things Indoor Gateway (TTIG)](https://www.thethingsnetwork.org/docs/gateways/thethingsindoor/), an 8 channel LoRaWAN gateway with LBT support, which is available for $69.
+For my tests I used the [The Things Indoor Gateway (TTIG)](https://www.thethingsindustries.com/docs/gateways/thethingsindoorgateway/), an 8 channel LoRaWAN gateway with LBT support, which is available for $69.
 
 ![The Things Indoor Gateway (TTIG)](doc/TTIG2.jpg)
 
@@ -30,9 +30,9 @@ For my tests I used the [The Things Indoor Gateway (TTIG)](https://www.thethings
 * IoT Shop - DE - [link](https://iot-shop.de/produkt/the-things-indoor-gateway)
 * Allied Electronics - [link](https://www.alliedelec.com/product/rs-components-uk/ttig-915/71600476/)
 
-There are also lots of other gateways. For an extensive list check out the hardware section of the TTN [gateway documentation](https://www.thethingsnetwork.org/docs/gateways/).
+There are also lots of other gateways. For an extensive list check out the hardware section of the TTN [gateway documentation](https://www.thethingsindustries.com/docs/gateways/).
 
-### Connecting the gateway to your WiFi (from the [TTN docs](https://www.thethingsnetwork.org/docs/gateways/thethingsindoor/#connection-to-the-the-things-network-backend))
+### Connecting the gateway to your WiFi (from the [TTN docs](https://www.thethingsindustries.com/docs/gateways/thethingsindoorgateway/#connecting-the-things-indoor-gateway))
 
 1. Press the reset button (small button at the back of the gateway next to the USB-C port) for 5 seconds until the LED blinks rapidly GREEN<->RED for a couple of times.
 2. Hold the SETUP (button at the top of the gateway, next to the LED) for 10 seconds until the LED blinks rapidly in RED.
@@ -48,31 +48,33 @@ There are also lots of other gateways. For an extensive list check out the hardw
 
 ### Connection to the TTN Backend
 
-Now, that your gateway is connected to the LoraWAN network you can register it inside TTN. For this, navigate to the [gateways page](https://console.thethingsnetwork.org/gateways) and click "register gateway".
+Now, that your gateway is connected to the LoraWAN network you can register it inside TTN. For this, navigate to the [**gateways** page](https://console.thethingsnetwork.org/gateways) and click "**Claim gateway**".
 
-![Register gateway](doc/register_gateway.PNG)
+![Claim gateway I](doc/claim_gateway.png)
 
-To connect this gateway to the The Things Network console, register the gateway using the Legacy Packet Forwarder option. The EUI of the gateway is derived from the first number below the QR code on the back of the TTN Indoor Gateway. To get the 8 byte EUI insert FFFE after the first 6 characters. The EUI can also be found at the bottom of the WiFi Setup page.
+Fill in the **Gateway EUI**, the **Claim authentication code** (the WiFi Password on the back of your TTN Indoor Gateway), the **Gateway ID** and choose the appropriate Frequency Plan for your region and device. The EUI of the gateway is derived from the first number below the QR code on the back of the TTN Indoor Gateway. To get the 8 byte EUI insert FFFE after the first 6 characters. The EUI can also be found at the bottom of the WiFi Setup page.
 
-After adding the gateway EUI add the other details such as location, frequency plan and router.
+![Claim gateway II](doc/claim_gateway_2.png)
 
-![Register gateway](doc/register_gateway_2.png)
+After you're finished click the "**Claim gateway**" button. If your inputs are correct, a new gateway will be created and you'll be redirected to an gateway overview page, showing you some basic information about the gateway as well as the live traffic of the gateway.
 
-After you're finished click the register gateway button. If your configuration was successful and you have any LoRaWAN nodes transmitting nearby you should start receiving packets.
-
-![Gateway traffic](doc/gateway_traffic.png)
+![Gateway Overview](doc/gateway_overview.png)
 
 If you don't have any nodes yet don't worry. You'll learn how to create an application and add a node in the next sections.
 
 ## Creating an application
 
-Next, you'll need to create an application. For this, navigate to the application page and click "add application".
+To create an application go to **Applications** in the top menu, and click **Add Application** to get to the application registration page. Fill in the application id (all other fields are optional).
 
 ![Create application](doc/create_application.png)
 
-## Registering the device at The Things Network
+After clicking on the "**Create application**" button, you'll be redirected to the application overview page.
 
-Now that you've created an application you're ready to register a device.
+![Application overview](doc/application_overview.png)
+
+## Registering a device
+
+Now that you've created an application you can add end devices to the application by going to **End devices** in the left menu and clicking on the "**Add end device**" button to reach the end device registration page.
 
 ![Adding device](doc/adding_device.PNG)
 
