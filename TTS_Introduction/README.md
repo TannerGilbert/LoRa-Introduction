@@ -1,8 +1,8 @@
-# LoRaWAN Node on The Things Network
+# Getting started with LoraWAN and The Things Stack
 
 > The LoRaWAN® specification is a Low Power, Wide Area (LPWA) networking protocol designed to wirelessly connect battery operated 'things' to the internet in regional, national or global networks, and targets key Internet of Things (IoT) requirements such as bi-directional communication, end-to-end security, mobility and localization services. - [Lora Alliance](https://lora-alliance.org/about-lorawan)
 
-[The Things Network](https://www.thethingsnetwork.org/) is a project dedicated to building an open, free, and decentralized internet of things network.
+[The Things Stack (TTS)](https://www.thethingsindustries.com/) is a project dedicated to building an open, free, and decentralized internet of things network.
 
 ## Creating a The Things Network Account
 
@@ -12,7 +12,7 @@ To create a The Things Network Account navigate to https://www.thethingsnetwork.
 
 ## Adding a gateway
 
-> Gateways form the bridge between devices and The Things Network. Devices use low power networks like LoRaWAN to connect to the Gateway, while the Gateway uses high bandwidth networks like WiFi, Ethernet or Cellular to connect to The Things Network. All gateways within reach of a device will receive the device's messages and forward them to The Things Network. The network will deduplicate the messages and select the best gateway to forward any messages queued for downlink. A single gateway can serve thousands of devices. - [TTN Gateway documentation](https://www.thethingsnetwork.org/docs/gateways/)
+> Gateways form the bridge between devices and The Things Stack. Devices use low power networks like LoRaWAN to connect to the Gateway, while the Gateway uses high bandwidth networks like WiFi, Ethernet or Cellular to connect to The Things Stack. All gateways within reach of a device will receive the device's messages and forward them to The Things Stack. The network will deduplicate the messages and select the best gateway to forward any messages queued for downlink. A single gateway can serve thousands of devices. - [TTS Gateway documentation](https://www.thethingsindustries.com/docs/)
 
 If there already is a gateway within reach, you won't need to buy one yourself since all gateways within reach of a device will receive and forward messages.
 
@@ -30,9 +30,9 @@ For my tests, I used the [The Things Indoor Gateway (TTIG)](https://www.thething
 * IoT Shop - DE - [link](https://iot-shop.de/produkt/the-things-indoor-gateway)
 * Allied Electronics - [link](https://www.alliedelec.com/product/rs-components-uk/ttig-915/71600476/)
 
-There are also lots of other gateways. For an extensive list, check out the hardware section of the TTN [gateway documentation](https://www.thethingsindustries.com/docs/gateways/).
+There are also lots of other gateways. For an extensive list, check out the hardware section of the TTS [gateway documentation](https://www.thethingsindustries.com/docs/gateways/).
 
-### Connecting the gateway to your WiFi (from the [TTN docs](https://www.thethingsindustries.com/docs/gateways/thethingsindoorgateway/#connecting-the-things-indoor-gateway))
+### Connecting the gateway to your WiFi (from the [TTS docs](https://www.thethingsindustries.com/docs/gateways/thethingsindoorgateway/#connecting-the-things-indoor-gateway))
 
 1. Press the reset button (small button at the back of the gateway next to the USB-C port) for 5 seconds until the LED blinks rapidly GREEN<->RED for a couple of times.
 2. Hold the SETUP (button at the top of the gateway, next to the LED) for 10 seconds until the LED blinks rapidly in RED.
@@ -46,13 +46,13 @@ There are also lots of other gateways. For an extensive list, check out the hard
     * Then, it will blink GREEN<->RED for a few seconds while it connects to the CUPS endpoint and fetches the necessary information to connect to the LNS traffic endpoint.
 9. If your configuration was successful, the LED will be solid GREEN which means that the gateway is connected to the LoRaWAN network and is ready to handle packets.
 
-### Connection to the TTN Backend
+### Connection to the TTS Backend
 
-Now that your gateway is connected to the LoraWAN network, you can register it inside TTN. For this, navigate to the [**gateways** page](https://console.thethingsnetwork.org/gateways) and click the "**Claim gateway**" button.
+Now that your gateway is connected to the LoraWAN network, you can register it inside TTS. For this, navigate to the [**gateways** page](https://console.thethingsnetwork.org/gateways) and click the "**Claim gateway**" button.
 
 ![Claim gateway I](doc/claim_gateway.png)
 
-Fill in the **Gateway EUI**, the **Claim authentication code** (the WiFi Password on the back of your TTN Indoor Gateway), the **Gateway ID**, and choose the appropriate Frequency Plan for your region and device. The EUI of the gateway is derived from the first number below the QR code on the back of the TTN Indoor Gateway. To get the 8 byte EUI insert FFFE after the first 6 characters. The EUI can also be found at the bottom of the WiFi Setup page.
+Fill in the **Gateway EUI**, the **Claim authentication code** (the WiFi Password on the back of your TTS Indoor Gateway), the **Gateway ID**, and choose the appropriate Frequency Plan for your region and device. The EUI of the gateway is derived from the first number below the QR code on the back of the TTS Indoor Gateway. To get the 8 byte EUI insert FFFE after the first 6 characters. The EUI can also be found at the bottom of the WiFi Setup page.
 
 ![Claim gateway II](doc/claim_gateway_2.png)
 
@@ -119,7 +119,7 @@ EU:
 
 ## Creating a sender script
 
-The LMIC library includes multiple scripts to communicate with The Things Network, which can be accessed under **Examples > MCCI LoRaWAN LMIC Library**. In this guide, we'll use the `ttn_abp` script.
+The LMIC library includes multiple scripts to communicate with The Things Stack, which can be accessed under **Examples > MCCI LoRaWAN LMIC Library**. In this guide, we'll use the `ttn_abp` script.
 
 To get the script to work, you have to enter the **Network Session Key**, **App Session Key**, and **Device Address** from the Overview tab of the device. You'll also have to update the **lmic_pinmap lmic_pins** variables depending on what microcontroller and LoRa module you're using.
 
@@ -144,7 +144,7 @@ You should also now be able to see the send data in the **Data tab** of the Appl
 
 ## Encoding/Decoding data
 
-LoraWAN and TTN transfer raw bytes, which can be hard to read. To convert the data into a plaintext string you need to add a **Payload formatter** to your application.
+LoraWAN and TTS transfer raw bytes, which can be hard to read. To convert the data into a plaintext string you need to add a **Payload formatter** to your application.
 
 ```javascript
 function decodeUplink(input) {
@@ -163,9 +163,9 @@ function decodeUplink(input) {
 
 ## Gateway data retrieval over MQTT
 
-Now we are receiving the data in TTN, but how can we get the data from TTN? TTN lets you get the data over MQTT, an extremely lightweight machine-to-machine(M2M) connectivity protocol using a publish/subscribe model.
+Now we are receiving the data in TTS, but how can we get the data from TTS? TTS lets you get the data over MQTT, an extremely lightweight machine-to-machine(M2M) connectivity protocol using a publish/subscribe model.
 
-In the following examples, I'll show you how to receive data using [Mosquitto's CLI](https://mosquitto.org/download/), but TTN also provides libraries for multiple programming languages, including Java, Node.js, and Python. For more information, check out the [Integrations with MQTT Clients section in the documentation](https://www.thethingsindustries.com/docs/integrations/mqtt/mqtt-clients/).
+In the following examples, I'll show you how to receive data using [Mosquitto's CLI](https://mosquitto.org/download/), but TTS also provides libraries for multiple programming languages, including Java, Node.js, and Python. For more information, check out the [Integrations with MQTT Clients section in the documentation](https://www.thethingsindustries.com/docs/integrations/mqtt/mqtt-clients/).
 
 ### Subscribing to Upstream Traffic
 
@@ -196,7 +196,7 @@ mosquitto_sub -h thethings.example.com -t '+/devices/+/up/led' -u '<AppID>' -P '
 
 ### Publishing Downlink Traffic
 
-MQTT can also be used to send messages to TTN. For this, you will have to address a specific device by its **Device ID**.
+MQTT can also be used to send messages to TTS. For this, you will have to address a specific device by its **Device ID**.
 
 ```
 mosquitto_pub -h <Region>.thethings.network -t "v3/<AppID>/devices/<DevID>/down/push" -u "<AppID>" -P "<AppKey>" -m "{""payload_fields"":{""led"":true}} -d"
